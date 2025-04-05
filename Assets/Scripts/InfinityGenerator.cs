@@ -71,8 +71,6 @@ public class InfinityGenerator : MonoBehaviour
                 spawnedItems.Remove(coordinate);
                 //Destroy(item);
                 item.SetActive(false);
-
-                Debug.Log("Removed " + coordinate);
             }
         }
     }
@@ -112,7 +110,6 @@ public class InfinityGenerator : MonoBehaviour
 
         item.transform.localPosition = (Vector3)coordinate * scale;
         spawnedItems[coordinate] = item;
-        Debug.Log("Added " + coordinate);
     }
 
 
