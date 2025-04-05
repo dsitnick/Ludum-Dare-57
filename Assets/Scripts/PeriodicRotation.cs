@@ -8,10 +8,13 @@ public class PeriodicRotation : MonoBehaviour
     public Vector3 axis;
 
     public float frequency, amplitude;
+    
+    float t = 0;
 
     void Update()
     {
-        transform.localEulerAngles = axis * Mathf.Sin(Time.time * 2 * Mathf.PI * frequency) * amplitude;
+        t += Time.deltaTime * frequency;
+        transform.localEulerAngles = axis * Mathf.Sin(t * 2 * Mathf.PI) * amplitude;
     }
 
 }

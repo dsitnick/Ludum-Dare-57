@@ -19,6 +19,6 @@ public class ParentClearer : MonoBehaviour
     
     void OnDestroy()
     {
-        Destroy(root.gameObject);
+        if (root?.gameObject != null) Destroy(root.gameObject);
     }
 }

@@ -13,6 +13,10 @@ public class SubController : PlayerController
     public float turnInertia = 30;
     public float swimIntertia = 30;
     public float boostScale = 3;
+    
+    public KeyCode lightsKey = KeyCode.F;
+    
+    public LightSource lights;
 
     public Camera subCamera;
 
@@ -31,6 +35,11 @@ public class SubController : PlayerController
 
     void Update()
     {
+        
+        if (Input.GetKeyDown(lightsKey)){
+            lights.SetLightActive(!lights.isOn);
+        }
+        
         Vector3 targetVelocity = Vector3.zero;
 
         if (isActive)

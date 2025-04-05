@@ -5,43 +5,31 @@ using UnityEngine;
 public class FishWandering : MonoBehaviour
 {
 
-    public float swimSpeed = 1;
-    public float velocityLerp = 8, rotationLerp = 8;
-
     public float wanderCellSize = 80;
     [Range(0, 1)]
     public float wanderCellPadding = 0.7f;
 
-
-    private const float TARGET_THRESHOLD = 1;
-    private Vector3 targetPos;
-
+    public Vector3 targetPos;
 
     void Start()
     {
-        targetPos = GetRandomAdjacentPoint();
+        GetNewPoint();
     }
 
+    private const float TARGET_THRESHOLD = 1;
     void FixedUpdate()
     {
         if (Vector3.SqrMagnitude(transform.position - targetPos) <= TARGET_THRESHOLD * TARGET_THRESHOLD)
         {
-            targetPos = GetRandomAdjacentPoint();
+            GetNewPoint();
         }
 
-
     }
 
-    Vector3 velocity;
-    void Update()
+    public void GetNewPoint()
     {
-        Vector3 targetDirection = (targetPos - transform.position).normalized;
-
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetDirection), rotationLerp * Time.deltaTime);
-        velocity = Vector3.Lerp(velocity, transform.forward * swimSpeed, velocityLerp * Time.deltaTime);
-        transform.position += velocity * Time.deltaTime;
+        targetPos = GetRandomAdjacentPoint();
     }
-
 
     Vector3 GetRandomAdjacentPoint()
     {
@@ -59,7 +47,7 @@ public class FishWandering : MonoBehaviour
             case 4: adjacentCell.z++; break;
             case 5: adjacentCell.z--; break;
         }
-        
+
         Debug.Log("Started at " + cell + " and moving to cell " + adjacentCell);
 
         Vector3 resultPosition = adjacentCell * wanderCellSize;
@@ -68,9 +56,9 @@ public class FishWandering : MonoBehaviour
             Random.Range(-0.5f, 0.5f) * wanderCellSize * wanderCellPadding,
             Random.Range(-0.5f, 0.5f) * wanderCellSize * wanderCellPadding
         );
-        
+
         resultPosition += randomOffset;
-        
+
         Debug.Log("Offset by " + randomOffset + " result position is " + resultPosition);
 
         return resultPosition;
