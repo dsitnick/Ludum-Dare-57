@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class CamController : MonoBehaviour {
+public class CamController : PlayerController {
     
     [Range(0, 10)]
     public float speed = 3;
@@ -18,13 +19,27 @@ public class CamController : MonoBehaviour {
     public new Camera camera;
     public Light[] flashlight;
     
+    [SerializeField] public UnityEvent<bool> onSetActive;
+    
     Vector2 aim;
     
     float moveSpeed => (Input.GetKey(KeyCode.LeftShift) ? sprintScale : 1) * speed;
     
     Vector3 velocity;
     
+    bool isActive;
+
+    public override void SetActive(bool isActive)
+    {
+        this.isActive = isActive;
+        camera.enabled = isActive;
+        onSetActive.Invoke(isActive);
+    }
+    
     void Update() {
+        if (!isActive){
+            return;
+        }
         aim += new Vector2(Input.GetAxisRaw("Mouse X"), -Input.GetAxisRaw("Mouse Y")) * mouseSens;
         aim.y = Mathf.Clamp(aim.y, -90, 90);
         
