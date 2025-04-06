@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class FishBehavior : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class FishBehavior : MonoBehaviour
     public float swimSpeed = 1;
     public float velocityLerp = 8, rotationLerp = 8, retreatDuration = 7;
     public bool isAttacking, isRetreating;
+    
+    public UnityEvent onHit;
 
     private Vector3 targetPos;
 
@@ -33,13 +36,14 @@ public class FishBehavior : MonoBehaviour
         {
             targetPos = wandering.targetPos;
         }
+    }
 
-        if (isAttacking && target != null && Vector3.Distance(transform.position, target.transform.position) < ATTACK_RANGE)
-        {
-            animator.SetTrigger("Hit");
-            aggro.ClearAggros();
-            StartCoroutine(Retreat());
-        }
+    public void Hit()
+    {
+        animator.SetTrigger("Hit");
+        aggro.ClearAggros();
+        onHit.Invoke();
+        StartCoroutine(Retreat());
     }
 
     Vector3 velocity;

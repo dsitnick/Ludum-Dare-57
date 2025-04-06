@@ -74,6 +74,7 @@ AudioMixerGroupController:
   m_Effects:
   - {fileID: -898015805652643365}
   - {fileID: 3451986172494964586}
+  - {fileID: -6050004516711906475}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0
@@ -103,6 +104,26 @@ AudioMixerEffectController:
   m_EffectName: Attenuation
   m_MixLevel: b4baa813e9a90d443b90ab476b8b497a
   m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!244 &-6050004516711906475
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 97d8a09a57d2b424582719b1c05701c9
+  m_EffectName: ParamEQ
+  m_MixLevel: 5c212f1f4e65dce42b22fca5cb5ab613
+  m_Parameters:
+  - m_ParameterName: Center freq
+    m_GUID: 3cb67a7f83fb8b04aa8023731517d595
+  - m_ParameterName: Octave range
+    m_GUID: ca058dd23b81acf4c998d07853195a5d
+  - m_ParameterName: Frequency gain
+    m_GUID: 14ab7adb8beed0a4586bd1bbf6241711
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
@@ -175,11 +196,11 @@ AudioMixerGroupController:
   m_Pitch: 7fda4f8f9707bf2458cae4cdb1aaeb1f
   m_Send: 00000000000000000000000000000000
   m_Effects:
-  - {fileID: -2622904594800262628}
   - {fileID: 694952416202137212}
   - {fileID: 8086773503548217062}
+  - {fileID: -2622904594800262628}
   m_UserColorIndex: 0
-  m_Mute: 1
+  m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
 --- !u!243 &-3960990588748826169
@@ -371,7 +392,8 @@ AudioMixerSnapshotController:
     d55696f0341d882439c68e44e690921c: 1.29
     fa60a72184ca03c4b9faadac0d6033ae: 0.323
     1371dc41a1da0234eb0c4e7762404447: 0.557
-    93e236618c7ccc348892d84c83895729: -3.5090396
+    93e236618c7ccc348892d84c83895729: -7.436929
+    ca058dd23b81acf4c998d07853195a5d: 1.79
     f83d99f2dc6d1d14c83a79d744f23300: 0.48599997
     f4cc9bb3cbbb08c49821104f3c0ee3d9: 0.83
     aa9b27f4b14e7e94d81cf7b9117fcc4c: 1663
@@ -380,6 +402,7 @@ AudioMixerSnapshotController:
     cd7d196828f6b1346bfb47fbe5a75ed1: 431
     9fa77d498248b2a4eba89461eec0d185: 3
     80b5dcda25e0ee44a9720c33662dbb28: 2540
+    14ab7adb8beed0a4586bd1bbf6241711: 0.85
     f9b5f70c9384c7341bc1219c382ae8b1: 0
     50d4fb9c2ff88ca44811c88824766bad: 202
     8f9cc5dcd4030aa4fb51011b31acc4c4: 0.557
@@ -387,7 +410,8 @@ AudioMixerSnapshotController:
     4dfb41ed5fba88f4e9cba87811bc514e: 1
     7d438c2e69b99024789efa9ae38d076a: 3
     a1add85ec83eb0a43b54a8123daa1b31: 1
-    3d5bd08eb700822418788d9590473fd8: -3.8468595
+    3d5bd08eb700822418788d9590473fd8: -14.221903
+    3cb67a7f83fb8b04aa8023731517d595: 209
     7fda4f8f9707bf2458cae4cdb1aaeb1f: 1
   m_TransitionOverrides: {}
 --- !u!244 &457514731527781432

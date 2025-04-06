@@ -83,7 +83,7 @@ public class InfinityGenerator : MonoBehaviour
         }
     }
 
-    Vector3Int GetCoordinate(Vector3 worldPosition)
+    public Vector3Int GetCoordinate(Vector3 worldPosition)
     {
         Vector3 localPosition = root.InverseTransformPoint(worldPosition);
         localPosition /= scale;
@@ -94,12 +94,14 @@ public class InfinityGenerator : MonoBehaviour
         );
     }
 
-    Vector3 GetCoordinatePosition(Vector3Int coordinate)
+    public Vector3 GetCoordinatePosition(Vector3Int coordinate)
     {
         Vector3 pos = coordinate;
         pos *= scale;
         return root.TransformPoint(pos);
     }
+    
+    public GameObject GetObjectAtCoordinate(Vector3Int coordinate) => spawnedItems[coordinate];
 
     void Build(Vector3Int coordinate)
     {

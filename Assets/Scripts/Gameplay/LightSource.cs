@@ -4,20 +4,33 @@ using UnityEngine;
 
 public class LightSource : MonoBehaviour
 {
-    
+
     public Light[] lights;
     public Transform[] lightColliders;
-    
+
     public Vector3 lastVisiblePosition;
 
     public bool isOn;
-    
-    public void SetLightActive(bool isOn){
+
+
+
+    void Start()
+    {
+        SetLightActive(isOn);
+    }
+
+    public void TurnLightOn() => SetLightActive(true);
+    public void TurnLightOff() => SetLightActive(false);
+
+    public void SetLightActive(bool isOn)
+    {
         this.isOn = isOn;
-        foreach (Light l in lights){
+        foreach (Light l in lights)
+        {
             l.enabled = isOn;
         }
-        foreach (var c in lightColliders){
+        foreach (var c in lightColliders)
+        {
             c.localScale = isOn ? Vector3.one : Vector3.zero;
         }
     }
@@ -34,9 +47,11 @@ public class LightSource : MonoBehaviour
         FishAggro target = other.GetComponentInParent<FishAggro>();
         target?.RemoveLight(this);
     }
-    
-    void FixedUpdate(){
-        if (isOn){
+
+    void FixedUpdate()
+    {
+        if (isOn)
+        {
             lastVisiblePosition = transform.position;
         }
     }
