@@ -18,6 +18,8 @@ public class FishBehavior : MonoBehaviour
     public float velocityLerp = 8, rotationLerp = 8, retreatDuration = 7;
     public bool isAttacking, isRetreating;
     
+    public Transform attackRoot;
+    
     public UnityEvent onHit;
 
     private Vector3 targetPos;
@@ -32,11 +34,16 @@ public class FishBehavior : MonoBehaviour
         {
             targetPos = target.lastVisiblePosition;
         }
-        else
+        else if (!isAttacking)
         {
             targetPos = wandering.targetPos;
         }
+        
+        if (isAttacking && Vector3.SqrMagnitude(targetPos - attackRoot.position) < DIST_THRESHOLD * DIST_THRESHOLD){
+            Hit();
+        }
     }
+    const float DIST_THRESHOLD = 3f;
 
     public void Hit()
     {

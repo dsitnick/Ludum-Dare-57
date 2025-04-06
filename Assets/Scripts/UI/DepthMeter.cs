@@ -20,7 +20,7 @@ public class DepthMeter : MonoBehaviour
     {
         float d = Mathf.Round(currentDepth / 10) * 10;
         
-        text.text = "Depth: " + d;
+        text.text = d + " m";
     }
     
 }

@@ -1370,6 +1370,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4038428885597896036}
     - target: {fileID: 5230332695313001548, guid: 8c775af3f0147af4fa25080a59b969fb, type: 3}
+      propertyPath: attackRoot
+      value: 
+      objectReference: {fileID: 533331821672431745}
+    - target: {fileID: 5230332695313001548, guid: 8c775af3f0147af4fa25080a59b969fb, type: 3}
       propertyPath: rotationLerp
       value: 2
       objectReference: {fileID: 0}

@@ -30,9 +30,17 @@ public class Oxygen : MonoBehaviour
         remainingO2 = 1;
         indicatorColor = indicatorImage.color;
     }
+    
+    private bool isActive = false;
+    public void Begin(){
+        isActive = true;
+        remainingO2 = 1;
+    }
 
     void FixedUpdate()
     {
+        if (!isActive) return;
+        
         float depth = -playerInfo.position.y;
         float depthDepletionScale = 1 + (scalePerHundred * depth / 100);
         remainingO2 -= depthDepletionScale * Time.fixedDeltaTime / timeToDeplete;

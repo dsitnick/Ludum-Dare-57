@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Deep Sea Diffuse
+  m_Name: Grey Metal
   m_Shader: {fileID: -6465566751694194690, guid: 857a9c0040272b64a944a7317ad79f95, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -44,7 +44,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.1981132, g: 0.13923994, b: 0.13923994, a: 1}
     - _Emissive: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &6550149479270857255

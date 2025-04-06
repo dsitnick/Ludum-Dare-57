@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CamController : PlayerController {
+public class CamController : MonoBehaviour {
     
     [Range(0, 10)]
     public float speed = 3;
@@ -17,7 +17,12 @@ public class CamController : PlayerController {
     public KeyCode flashlightKey = KeyCode.F;
     
     public new Camera camera;
-    public Light[] flashlight;
+    public LightSource flashlight;
+    
+    public PlayerInfoScriptableObject playerInfo;
+    public SubController subController;
+    
+    public HoldPressButton boardSubButton;
     
     [SerializeField] public UnityEvent<bool> onSetActive;
     
@@ -28,12 +33,25 @@ public class CamController : PlayerController {
     Vector3 velocity;
     
     bool isActive;
+    
+    void Start(){
+        SetActive(false);
+    }
 
-    public override void SetActive(bool isActive)
+    public void SetActive(bool isActive)
     {
         this.isActive = isActive;
-        camera.enabled = isActive;
+        camera.enabled = camera.GetComponent<AudioListener>().enabled = isActive;
         onSetActive.Invoke(isActive);
+        boardSubButton.SetActive(isActive);
+        SetFlashlightActive(isActive);
+    }
+
+    public void SpawnAtPosition(Vector3 position)
+    {
+        position += Vector3.down * 7;
+        velocity = Vector3.down * 8;
+        transform.position = playerInfo.position = position;
     }
     
     void Update() {
@@ -56,14 +74,38 @@ public class CamController : PlayerController {
         velocity = Vector3.Lerp(velocity, moveDir * moveSpeed, swimIntertia * Time.deltaTime);
         
         transform.position += velocity * Time.deltaTime;
+        playerInfo.position = transform.position;
         
         if (Input.GetKeyDown(flashlightKey)){
-            foreach (Light f in flashlight) f.enabled = !f.enabled;
+            SetFlashlightActive(!flaslightOn);
         }
         
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         
+    }
+    
+    public void BoardSubmarine(){
+        SetActive(false);
+        subController.SetActive(true);
+    }
+    
+    bool wasSubProximity;
+    void FixedUpdate(){
+        bool subProximity = CheckSubmarineProximity();
+        if (subProximity != wasSubProximity){
+            wasSubProximity = subProximity;
+            boardSubButton.SetActive(subProximity);
+        }
+    }
+    
+    const float SUB_BOARD_DISTANCE = 3;
+    bool CheckSubmarineProximity() => Vector3.SqrMagnitude(transform.position - subController.transform.position) <= SUB_BOARD_DISTANCE * SUB_BOARD_DISTANCE;
+    
+    bool flaslightOn;
+    void SetFlashlightActive(bool flaslightOn){
+        this.flaslightOn = flaslightOn;
+        flashlight.SetLightActive(flaslightOn);
     }
     
 }

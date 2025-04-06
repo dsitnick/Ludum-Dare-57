@@ -1,5 +1,83 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1207396579
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1207396580}
+  - component: {fileID: 1207396581}
+  m_Layer: 6
+  m_Name: Flashlight Radial Hitbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1207396580
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207396579}
+  m_LocalRotation: {x: -0.6830128, y: -0.18301244, z: 0.18301244, w: 0.6830128}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 50, y: 50, z: 50}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1706825365}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: -30, z: 0}
+--- !u!135 &1207396581
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207396579}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1706825364
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1706825365}
+  m_Layer: 0
+  m_Name: Hitboxes
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1706825365
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1706825364}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 700751742247772978}
+  - {fileID: 1207396580}
+  m_Father: {fileID: 1023206080866369057}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1023206079856800233
 GameObject:
   m_ObjectHideFlags: 0
@@ -10,6 +88,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1023206079856800235}
   - component: {fileID: 1023206079856800234}
+  - component: {fileID: 1201931584}
+  - component: {fileID: 1201931585}
+  - component: {fileID: 6456390333584604706}
   m_Layer: 0
   m_Name: Swim Controller
   m_TagString: Untagged
@@ -51,8 +132,225 @@ MonoBehaviour:
   swimIntertia: 30
   flashlightKey: 102
   camera: {fileID: 1023206081271392266}
-  flashlight:
+  flashlight: {fileID: 6456390333584604706}
+  playerInfo: {fileID: 11400000, guid: 44e2000cfeb1ec7419b73f32845fb075, type: 2}
+  subController: {fileID: 0}
+  boardSubButton: {fileID: 1201931584}
+  onSetActive:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1023206080866369056}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1201931584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1023206079856800233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4dbef6451bf7614c99c21aaefd77321, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: 101
+  heldDuration: 2
+  onHoldPress:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1023206079856800234}
+        m_TargetAssemblyTypeName: CamController, Assembly-CSharp
+        m_MethodName: BoardSubmarine
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onProgress:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
+        m_MethodName: set_fillAmount
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onSetHeld:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onSetActive:
+    m_PersistentCalls:
+      m_Calls: []
+  isActive: 1
+  resetProgress: 1
+--- !u!54 &1201931585
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1023206079856800233}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &6456390333584604706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1023206079856800233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9425c67c2e0767469d37bcc7ccd9005, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lights:
   - {fileID: 1023206081085052380}
+  lightColliders:
+  - {fileID: 1706825365}
+  lastVisiblePosition: {x: 0, y: 0, z: 0}
+  isOn: 0
+--- !u!1001 &1023206080476824793
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1706825365}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 18c2570f363c81a45a913c91241812fc, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 18c2570f363c81a45a913c91241812fc, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 18c2570f363c81a45a913c91241812fc, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 18c2570f363c81a45a913c91241812fc, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 18c2570f363c81a45a913c91241812fc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 18c2570f363c81a45a913c91241812fc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 18c2570f363c81a45a913c91241812fc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 18c2570f363c81a45a913c91241812fc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 18c2570f363c81a45a913c91241812fc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 18c2570f363c81a45a913c91241812fc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 18c2570f363c81a45a913c91241812fc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 18c2570f363c81a45a913c91241812fc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 18c2570f363c81a45a913c91241812fc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -30
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 18c2570f363c81a45a913c91241812fc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 18c2570f363c81a45a913c91241812fc, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 18c2570f363c81a45a913c91241812fc, type: 3}
+      propertyPath: m_Name
+      value: Flashlight Hitbox
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 18c2570f363c81a45a913c91241812fc, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: -7511558181221131132, guid: 18c2570f363c81a45a913c91241812fc, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 18c2570f363c81a45a913c91241812fc, type: 3}
+--- !u!1 &212303960044370312 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 18c2570f363c81a45a913c91241812fc, type: 3}
+  m_PrefabInstance: {fileID: 1023206080476824793}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &546385936
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 212303960044370312}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4711208715938537054, guid: 18c2570f363c81a45a913c91241812fc, type: 3}
+--- !u!4 &700751742247772978 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 18c2570f363c81a45a913c91241812fc, type: 3}
+  m_PrefabInstance: {fileID: 1023206080476824793}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1969563570778813491
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -60,6 +358,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1023206079856800235}
     m_Modifications:
+    - target: {fileID: 1542028926960884793, guid: d9edcbee3ca0ae14f91e9b58909be336, type: 3}
+      propertyPath: m_Depth
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1542028926960884794, guid: d9edcbee3ca0ae14f91e9b58909be336, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1542028926960884796, guid: d9edcbee3ca0ae14f91e9b58909be336, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -177,6 +483,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 95bddfce92696814aa7d40db7fa2b998, type: 3}
+--- !u!1 &1023206080866369056 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9187712477268308805, guid: 95bddfce92696814aa7d40db7fa2b998, type: 3}
+  m_PrefabInstance: {fileID: 8192724281206984037}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1023206080866369057 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9187712477268308804, guid: 95bddfce92696814aa7d40db7fa2b998, type: 3}
+  m_PrefabInstance: {fileID: 8192724281206984037}
+  m_PrefabAsset: {fileID: 0}
 --- !u!108 &1023206081085052380 stripped
 Light:
   m_CorrespondingSourceObject: {fileID: 9187712477622130873, guid: 95bddfce92696814aa7d40db7fa2b998, type: 3}

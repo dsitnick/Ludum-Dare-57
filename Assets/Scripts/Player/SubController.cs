@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class SubController : PlayerController
+public class SubController : MonoBehaviour
 {
 
     public PlayerInfoScriptableObject playerInfo;
@@ -31,6 +31,12 @@ public class SubController : PlayerController
     public bool controlsActive;
 
     public UnityEvent onFinishDescent;
+    public AlarmSwitcher proximityAlarm;
+    public CamController swimController;
+    public HoldPressButton exitButton;
+
+    public float targetDepth;
+    public float[] warningProximities;
 
     Vector2 aim, aimSpin;
     Vector3 velocity;
@@ -41,25 +47,33 @@ public class SubController : PlayerController
     bool isActive;
     bool hasStarted = false;
 
-    public override void SetActive(bool isActive)
+    void Start()
+    {
+        SetActive(true);
+        exitButton.SetActive(false);
+    }
+
+    public void SetActive(bool isActive)
     {
         this.isActive = isActive;
-        subCamera.enabled = isActive;
+        subCamera.enabled = subCamera.GetComponent<AudioListener>().enabled = isActive;
+        exitButton.SetActive(isActive);
+
     }
 
     void Update()
     {
         if (controlsActive)
         {
-            if (Input.GetKeyDown(lightsKey))
-            {
-                lights.SetLightActive(!lights.isOn);
-            }
 
             Vector3 targetVelocity = Vector3.zero;
 
             if (isActive)
             {
+                if (Input.GetKeyDown(lightsKey))
+                {
+                    lights.SetLightActive(!lights.isOn);
+                }
                 Vector2 turnInput = new Vector2(
                     Input.GetAxisRaw("Horizontal"),
                     -Input.GetAxisRaw("Vertical")
@@ -82,15 +96,16 @@ public class SubController : PlayerController
         else
         {
             velocity = overrideVelocity;
-            if (!hasStarted && transform.position.y <= 10)
+            if (!hasStarted && transform.position.y <= targetDepth)
             {
                 onFinishDescent.Invoke();
                 hasStarted = true;
+                exitButton.SetActive(true);
             }
         }
         transform.position += velocity * Time.deltaTime;
 
-        playerInfo.position = transform.position;
+        if (isActive) playerInfo.position = transform.position;
 
     }
 
@@ -104,15 +119,42 @@ public class SubController : PlayerController
 
     public void ExitSub()
     {
-        ControllerManager.ActivateController(ControllerManager.Controller.Swim);
+        SetActive(false);
+        swimController.SetActive(true);
+        swimController.SpawnAtPosition(transform.position);
     }
 
     Collider[] collisionBuffer = new Collider[1];
+
+    int currentProximityLevel;
+
     void FixedUpdate()
     {
+        int count = 0;
+
+        int lastProximityLevel = currentProximityLevel;
+        currentProximityLevel = -1;
+        for (int i = 0; i < warningProximities.Length; i++)
+        {
+            count = Physics.OverlapSphereNonAlloc(transform.position, warningProximities[i], collisionBuffer, collisionMask);
+            if (count > 0)
+            {
+                currentProximityLevel = i;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        if (lastProximityLevel != currentProximityLevel)
+        {
+            proximityAlarm.SetAlarmLevel(currentProximityLevel);
+        }
+
         if (isBlockingcollision) return;
 
-        int count = Physics.OverlapSphereNonAlloc(transform.position, collisionRadius, collisionBuffer, collisionMask);
+        count = Physics.OverlapSphereNonAlloc(transform.position, collisionRadius, collisionBuffer, collisionMask);
         if (count > 0)
         {
             Collider c = collisionBuffer[0];

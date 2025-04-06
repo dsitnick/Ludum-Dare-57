@@ -24,6 +24,7 @@ public class LightSource : MonoBehaviour
 
     public void SetLightActive(bool isOn)
     {
+        Debug.Log("Set lights " + name + "  " + isOn);
         this.isOn = isOn;
         foreach (Light l in lights)
         {

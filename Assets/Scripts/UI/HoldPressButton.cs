@@ -12,11 +12,12 @@ public class HoldPressButton : MonoBehaviour
 
     public UnityEvent onHoldPress;
     public UnityEventFloat onProgress;
-    public UnityEvent<bool> onSetHeld;
+    public UnityEvent<bool> onSetHeld, onSetActive;
+    public bool isActive = true;
+    public bool resetProgress;
 
     bool isHeld = false;
     float progress = 0;
-
     void Start()
     {
         onSetHeld.Invoke(false);
@@ -27,19 +28,14 @@ public class HoldPressButton : MonoBehaviour
     {
         if (!isHeld)
         {
-            if (Input.GetKeyDown(button))
+            if (isActive && Input.GetKeyDown(button))
             {
-                isHeld = true;
-                progress = 0;
-                onProgress.Invoke(progress);
-                onSetHeld.Invoke(true);
-
+                Begin();
             }
         }
-        else if (Input.GetKeyUp(button))
+        else if (!isActive || Input.GetKeyUp(button))
         {
-            onSetHeld.Invoke(false);
-            isHeld = false;
+            Cancel();
         }
         else
         {
@@ -48,14 +44,48 @@ public class HoldPressButton : MonoBehaviour
 
             if (progress > 1)
             {
-                progress = 1;
-                onHoldPress.Invoke();
-                onSetHeld.Invoke(false);
-                isHeld = false;
+                Complete();
             }
             onProgress.Invoke(progress);
 
         }
+    }
+
+    void Begin()
+    {
+        if (resetProgress)
+        {
+            progress = 0;
+        }
+        else if (progress >= 1)
+        {
+            return;
+        }
+        isHeld = true;
+        onProgress.Invoke(progress);
+        onSetHeld.Invoke(true);
+
+
+    }
+
+    void Cancel()
+    {
+        onSetHeld.Invoke(false);
+        isHeld = false;
+    }
+
+    void Complete()
+    {
+        progress = 1;
+        onHoldPress.Invoke();
+        onSetHeld.Invoke(false);
+        isHeld = false;
+    }
+
+    public void SetActive(bool isActive)
+    {
+        this.isActive = isActive;
+        onSetActive.Invoke(isActive);
     }
 
 }

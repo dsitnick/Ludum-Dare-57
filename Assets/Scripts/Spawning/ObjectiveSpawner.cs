@@ -8,7 +8,7 @@ public class ObjectiveSpawner : MonoBehaviour
     public InfinityGenerator infinityGenerator;
     public float minDistance = 320, maxDistance = 800;
 
-    public GameObject objectivePrefab;
+    public GameObject objectiveObject;
 
     void Awake()
     {
@@ -21,9 +21,9 @@ public class ObjectiveSpawner : MonoBehaviour
         
         if (direction.y > 0) direction.y *= -1;
         Vector3Int coordinate = infinityGenerator.GetCoordinate(transform.position + direction);
-        Vector3 pos = infinityGenerator.GetCoordinatePosition(coordinate) + Vector3.one * 0.5f * infinityGenerator.scale;
+        Vector3 pos = infinityGenerator.GetCoordinatePosition(coordinate);
 
-        PipeObjective obj = Instantiate(objectivePrefab).GetComponent<PipeObjective>();
+        PipeObjective obj = objectiveObject.GetComponent<PipeObjective>();
         obj.Setup(pos, infinityGenerator.scale);
     }
 
