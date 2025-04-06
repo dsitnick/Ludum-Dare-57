@@ -4,18 +4,10 @@ using UnityEngine;
 
 public class AlarmSwitcher : MonoBehaviour
 {
-    
-    public AudioSource audioSource;
-    
-    public AudioClip[] clips;
+    public Animator animator;
     
     public void SetAlarmLevel(int level){
-        if (level < 0){
-            audioSource.Stop();
-            return;
-        }
-        audioSource.clip = clips[level];
-        audioSource.Play();
+        animator.SetFloat("Alarm Level", level + 1);
     }
     
 }

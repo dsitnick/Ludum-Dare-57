@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LightSource : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class LightSource : MonoBehaviour
 
     public bool isOn;
 
+    [SerializeField] public UnityEvent<bool> onSetActive;
 
 
     void Start()
@@ -34,6 +36,8 @@ public class LightSource : MonoBehaviour
         {
             c.localScale = isOn ? Vector3.one : Vector3.zero;
         }
+        
+        onSetActive.Invoke(isOn);
     }
 
     void OnTriggerEnter(Collider other)

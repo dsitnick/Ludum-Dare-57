@@ -258,6 +258,9 @@ MonoBehaviour:
   - {fileID: 1706825365}
   lastVisiblePosition: {x: 0, y: 0, z: 0}
   isOn: 0
+  onSetActive:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5698806761062274413
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,15 +320,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 18c2570f363c81a45a913c91241812fc, type: 3}
       propertyPath: m_LocalScale.x
-      value: 60.000004
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 18c2570f363c81a45a913c91241812fc, type: 3}
       propertyPath: m_LocalScale.y
-      value: 60.000004
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 18c2570f363c81a45a913c91241812fc, type: 3}
       propertyPath: m_LocalScale.z
-      value: 60.000004
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 18c2570f363c81a45a913c91241812fc, type: 3}
       propertyPath: m_LocalPosition.x

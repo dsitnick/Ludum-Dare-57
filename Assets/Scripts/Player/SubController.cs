@@ -38,6 +38,8 @@ public class SubController : MonoBehaviour
     public CamController swimController;
     public HoldPressButton exitButton;
 
+    public UnityEvent onActivateCamera;
+
     public float targetDepth;
     public float[] warningProximities;
 
@@ -70,6 +72,8 @@ public class SubController : MonoBehaviour
         this.isActive = isActive;
         subCamera.enabled = subCamera.GetComponent<AudioListener>().enabled = isActive;
         exitButton.SetActive(isActive);
+
+        if (isActive) onActivateCamera.Invoke();
 
         if (isActive && playerInfo.isObjectiveComplete)
         {
@@ -157,18 +161,22 @@ public class SubController : MonoBehaviour
 
         int lastProximityLevel = currentProximityLevel;
         currentProximityLevel = -1;
-        for (int i = 0; i < warningProximities.Length; i++)
+        if (controlsActive)
         {
-            count = Physics.OverlapSphereNonAlloc(transform.position, warningProximities[i], collisionBuffer, collisionMask);
-            if (count > 0)
+            for (int i = 0; i < warningProximities.Length; i++)
             {
-                currentProximityLevel = i;
-            }
-            else
-            {
-                break;
+                count = Physics.OverlapSphereNonAlloc(transform.position, warningProximities[i], collisionBuffer, collisionMask);
+                if (count > 0)
+                {
+                    currentProximityLevel = i;
+                }
+                else
+                {
+                    break;
+                }
             }
         }
+
 
         if (lastProximityLevel != currentProximityLevel)
         {

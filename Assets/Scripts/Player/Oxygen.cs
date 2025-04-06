@@ -24,6 +24,7 @@ public class Oxygen : MonoBehaviour
     public UnityEvent onCriticalO2, onDeath;
 
     private Color indicatorColor;
+    private float damageRateAccumulation = 1;
 
     void Start()
     {
@@ -42,8 +43,7 @@ public class Oxygen : MonoBehaviour
         if (!isActive) return;
         
         float depth = -playerInfo.position.y;
-        float depthDepletionScale = 1 + (scalePerHundred * depth / 100);
-        remainingO2 -= depthDepletionScale * Time.fixedDeltaTime / timeToDeplete;
+        remainingO2 -= damageRateAccumulation * Time.fixedDeltaTime / timeToDeplete;
         Refresh();
 
         indicatorImage.fillAmount = remainingO2 * indicatorFull;
@@ -52,14 +52,9 @@ public class Oxygen : MonoBehaviour
 
     public void TakeSubmarineDamage()
     {
-        if (remainingO2 > 0.4f)
-        {
-            remainingO2 -= 0.2f;
-        }
-        else
-        {
-            remainingO2 *= 0.5f;
-        }
+        remainingO2 -= 0.15f;
+        damageRateAccumulation *= 1.3f;
+        damageRateAccumulation = Mathf.Max(damageRateAccumulation, 3);
         Refresh();
     }
 

@@ -30,6 +30,7 @@ public class CamController : MonoBehaviour
     public LayerMask collisionMask;
 
     public UnityEvent onDie;
+    public UnityEvent onActivateCamera;
 
     [SerializeField] public UnityEvent<bool> onSetActive;
 
@@ -51,6 +52,8 @@ public class CamController : MonoBehaviour
         this.isActive = isActive;
         camera.enabled = camera.GetComponent<AudioListener>().enabled = isActive;
         onSetActive.Invoke(isActive);
+        
+        if (isActive) onActivateCamera.Invoke();
         
         SetFlashlightActive(isActive);
     }
