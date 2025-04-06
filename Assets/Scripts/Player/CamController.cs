@@ -49,8 +49,8 @@ public class CamController : MonoBehaviour {
 
     public void SpawnAtPosition(Vector3 position)
     {
-        position += Vector3.down * 7;
-        velocity = Vector3.down * 8;
+        position += subController.transform.up * -10;
+        velocity = subController.transform.up * -8;
         transform.position = playerInfo.position = position;
     }
     

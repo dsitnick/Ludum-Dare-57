@@ -17,6 +17,8 @@ public class PipeObjective : MonoBehaviour
     public HoldPressButton repairButton;
     
     public UnityEvent onStartRepair, onComplete;
+    
+    bool isComplete;
 
     void OnEnable()
     {
@@ -70,7 +72,7 @@ public class PipeObjective : MonoBehaviour
 
     void FixedUpdate()
     {
-        bool inRange = CheckIfPlayerInRange();
+        bool inRange = !isComplete && CheckIfPlayerInRange();
 
         if (inRange != wasInRange)
         {
@@ -80,6 +82,7 @@ public class PipeObjective : MonoBehaviour
     }
     
     public void CompleteObjective(){
+        isComplete = true;
         onComplete.Invoke();
     }
     

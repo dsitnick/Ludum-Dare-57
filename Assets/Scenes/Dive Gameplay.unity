@@ -1555,10 +1555,6 @@ PrefabInstance:
       propertyPath: onSetActive.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2506357}
-    - target: {fileID: 7515764376689902200, guid: a05fd0778ace5f549a5b4823c01cba2c, type: 3}
-      propertyPath: repairRange
-      value: 12
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a05fd0778ace5f549a5b4823c01cba2c, type: 3}
 --- !u!1 &565244877
@@ -3092,7 +3088,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 20 m
+  m_text: 410 m
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 03ac06092d44f3941a084d19d120cf5b, type: 2}
   m_sharedMaterial: {fileID: -4258075457994714723, guid: 03ac06092d44f3941a084d19d120cf5b, type: 2}
