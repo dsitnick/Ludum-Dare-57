@@ -83,6 +83,7 @@ public class PipeObjective : MonoBehaviour
     
     public void CompleteObjective(){
         isComplete = true;
+        playerInfo.isObjectiveComplete = true;
         onComplete.Invoke();
     }
     

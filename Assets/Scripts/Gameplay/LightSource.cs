@@ -24,7 +24,7 @@ public class LightSource : MonoBehaviour
 
     public void SetLightActive(bool isOn)
     {
-        Debug.Log("Set lights " + name + "  " + isOn);
+        //Debug.Log("Set lights " + name + "  " + isOn);
         this.isOn = isOn;
         foreach (Light l in lights)
         {
@@ -38,7 +38,7 @@ public class LightSource : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Trigger");
+        //Debug.Log("Trigger");
         FishAggro target = other.GetComponentInParent<FishAggro>();
         target?.AddLight(this);
     }

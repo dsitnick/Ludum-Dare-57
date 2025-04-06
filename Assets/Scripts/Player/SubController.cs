@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class SubController : MonoBehaviour
 {
@@ -30,8 +31,9 @@ public class SubController : MonoBehaviour
     public Camera subCamera;
 
     public bool controlsActive;
+    public bool damageActive = true;
 
-    public UnityEvent onFinishDescent;
+    public UnityEvent onFinishDescent, onVictory;
     public AlarmSwitcher proximityAlarm;
     public CamController swimController;
     public HoldPressButton exitButton;
@@ -50,6 +52,7 @@ public class SubController : MonoBehaviour
 
     void Start()
     {
+        playerInfo.isObjectiveComplete = false;
         SetActive(true);
         exitButton.SetActive(false);
 
@@ -68,6 +71,10 @@ public class SubController : MonoBehaviour
         subCamera.enabled = subCamera.GetComponent<AudioListener>().enabled = isActive;
         exitButton.SetActive(isActive);
 
+        if (isActive && playerInfo.isObjectiveComplete)
+        {
+            onVictory.Invoke();
+        }
     }
 
     void FinishDescent()
@@ -118,6 +125,8 @@ public class SubController : MonoBehaviour
             }
         }
         transform.position += velocity * Time.deltaTime;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
 
         if (isActive) playerInfo.position = transform.position;
 
@@ -175,7 +184,11 @@ public class SubController : MonoBehaviour
             Vector3 point = c.ClosestPoint(transform.position);
             velocity = (transform.position - point).normalized * damageBounceSpeed;
             StartCoroutine(CollisionBlocker());
-            onCollide.Invoke();
+
+            if (damageActive)
+            {
+                onCollide.Invoke();
+            }
 
             FishBehavior fish = c.GetComponentInParent<FishBehavior>();
             if (fish != null)
@@ -191,5 +204,10 @@ public class SubController : MonoBehaviour
         isBlockingcollision = true;
         yield return new WaitForSeconds(1.5f);
         isBlockingcollision = false;
+    }
+
+    public void GoToMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 }

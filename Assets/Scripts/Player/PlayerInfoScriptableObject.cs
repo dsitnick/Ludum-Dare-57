@@ -9,4 +9,6 @@ public class PlayerInfoScriptableObject : ScriptableObject
     public Vector3 position;
     public bool isSubmarine;
     
+    public bool isObjectiveComplete;
+    
 }

@@ -51,20 +51,20 @@ public class CamController : MonoBehaviour
         this.isActive = isActive;
         camera.enabled = camera.GetComponent<AudioListener>().enabled = isActive;
         onSetActive.Invoke(isActive);
-        boardSubButton.SetActive(isActive);
+        
         SetFlashlightActive(isActive);
     }
 
     public void SpawnAtPosition(Vector3 position)
     {
-        position += subController.transform.up * -10;
-        velocity = subController.transform.up * -8;
+        position += subController.transform.up * -11;
+        velocity = subController.transform.up * -12;
         transform.position = playerInfo.position = position;
     }
 
     void Update()
     {
-        if (!isActive)
+        if (!isActive || isDead)
         {
             return;
         }
@@ -109,14 +109,16 @@ public class CamController : MonoBehaviour
         subController.SetActive(true);
     }
 
-    bool wasSubProximity;
+    bool wasSubProximity = true;
     void FixedUpdate()
     {
-        bool subProximity = CheckSubmarineProximity();
+        bool subProximity = isActive && CheckSubmarineProximity();
+        //Debug.Log(subProximity);
         if (subProximity != wasSubProximity)
         {
             wasSubProximity = subProximity;
             boardSubButton.SetActive(subProximity);
+            Debug.Log("Updating button " + subProximity);
         }
 
         rb.position += velocity * Time.fixedDeltaTime;
@@ -126,7 +128,7 @@ public class CamController : MonoBehaviour
 
     }
 
-    const float SUB_BOARD_DISTANCE = 3;
+    const float SUB_BOARD_DISTANCE = 10;
     bool CheckSubmarineProximity() => Vector3.SqrMagnitude(transform.position - subController.transform.position) <= SUB_BOARD_DISTANCE * SUB_BOARD_DISTANCE;
 
     bool flaslightOn;
@@ -136,8 +138,11 @@ public class CamController : MonoBehaviour
         flashlight.SetLightActive(flaslightOn);
     }
 
+    bool isDead;
     public void Die()
     {
+        if (isDead) return;
+        isDead = true;
         Debug.Log("Got eaten");
         onDie.Invoke();
     }
