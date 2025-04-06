@@ -302,9 +302,9 @@ MonoBehaviour:
   playerInfo: {fileID: 11400000, guid: 44e2000cfeb1ec7419b73f32845fb075, type: 2}
   enemySpawner: {fileID: 1921270310}
   scale: 80
-  buildGridSize: 3
+  buildGridSize: 4
   clearDistance: 4
-  enemySpawnProbability: 0.07
+  enemySpawnProbability: 0
 --- !u!4 &111770031
 Transform:
   m_ObjectHideFlags: 0
@@ -1860,7 +1860,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f96152b9c60c80e45b454a139699017e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInfo: {fileID: 0}
+  playerInfo: {fileID: 11400000, guid: 44e2000cfeb1ec7419b73f32845fb075, type: 2}
   speed: 4
   turnSpeed: 40
   turnInertia: 1
@@ -2071,11 +2071,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58d7e3f8332bcfe478ab7480c8e39032, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSpawnInterval: 0
-  maxSpawnInterval: 0
-  minSpawnDistance: 0
-  maxSpawnDistance: 0
-  maxSpawnCount: 0
+  minSpawnInterval: 5
+  maxSpawnInterval: 16
+  minSpawnDistance: 160
+  maxSpawnDistance: 200
+  maxSpawnCount: 12
   enemyPrefab: {fileID: 6302964385565059120, guid: 6639583d3463dfd47833bb4f08b3faf5, type: 3}
   enemyRoot: {fileID: 1921270309}
   playerInfo: {fileID: 11400000, guid: 44e2000cfeb1ec7419b73f32845fb075, type: 2}
