@@ -5,6 +5,8 @@ using UnityEngine.Events;
 
 public class SubController : PlayerController
 {
+    
+    public PlayerInfoScriptableObject playerInfo;
 
     public float speed = 3;
 
@@ -63,6 +65,8 @@ public class SubController : PlayerController
 
         velocity = Vector3.Lerp(velocity, targetVelocity, swimIntertia * Time.deltaTime);
         transform.position += velocity * Time.deltaTime;
+        
+        playerInfo.position = transform.position;
 
     }
 

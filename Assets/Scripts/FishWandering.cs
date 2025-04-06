@@ -13,22 +13,55 @@ public class FishWandering : MonoBehaviour
 
     void Start()
     {
+        transform.position = GetRandomPoint();
         GetNewPoint();
     }
 
     private const float TARGET_THRESHOLD = 1;
+    private const float CHECK_RATE = 0.5f;
+    float checkTimer;
     void FixedUpdate()
     {
-        if (Vector3.SqrMagnitude(transform.position - targetPos) <= TARGET_THRESHOLD * TARGET_THRESHOLD)
+        if (checkTimer <= 0)
         {
-            GetNewPoint();
+            if (Vector3.SqrMagnitude(transform.position - targetPos) <= TARGET_THRESHOLD * TARGET_THRESHOLD)
+            {
+                GetNewPoint();
+            }
+            checkTimer += CHECK_RATE;
         }
+        checkTimer -= Time.fixedDeltaTime;
+
 
     }
 
     public void GetNewPoint()
     {
         targetPos = GetRandomAdjacentPoint();
+    }
+
+    Vector3 GetRandomPoint(Vector3 cell)
+    {
+        Vector3 resultPosition = cell * wanderCellSize;
+        Vector3 randomOffset = new Vector3(
+            Random.Range(-0.5f, 0.5f) * wanderCellSize * wanderCellPadding,
+            Random.Range(-0.5f, 0.5f) * wanderCellSize * wanderCellPadding,
+            Random.Range(-0.5f, 0.5f) * wanderCellSize * wanderCellPadding
+        );
+
+        resultPosition += randomOffset;
+
+        //Debug.Log("Offset by " + randomOffset + " result position is " + resultPosition);
+
+        return resultPosition;
+    }
+
+    Vector3 GetRandomPoint()
+    {
+        Vector3 cell = transform.position / wanderCellSize;
+        cell = new Vector3(Mathf.Round(cell.x), Mathf.Round(cell.y), Mathf.Round(cell.z));
+
+        return GetRandomPoint(cell);
     }
 
     Vector3 GetRandomAdjacentPoint()
@@ -48,20 +81,11 @@ public class FishWandering : MonoBehaviour
             case 5: adjacentCell.z--; break;
         }
 
-        Debug.Log("Started at " + cell + " and moving to cell " + adjacentCell);
+        //Debug.Log("Started at " + cell + " and moving to cell " + adjacentCell);
 
-        Vector3 resultPosition = adjacentCell * wanderCellSize;
-        Vector3 randomOffset = new Vector3(
-            Random.Range(-0.5f, 0.5f) * wanderCellSize * wanderCellPadding,
-            Random.Range(-0.5f, 0.5f) * wanderCellSize * wanderCellPadding,
-            Random.Range(-0.5f, 0.5f) * wanderCellSize * wanderCellPadding
-        );
+        return GetRandomPoint(adjacentCell);
 
-        resultPosition += randomOffset;
 
-        Debug.Log("Offset by " + randomOffset + " result position is " + resultPosition);
-
-        return resultPosition;
     }
 
 }

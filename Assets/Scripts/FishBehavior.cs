@@ -7,6 +7,7 @@ public class FishBehavior : MonoBehaviour
 
     public FishWandering wandering;
     public FishAggro aggro;
+    public PlayerInfoScriptableObject playerInfo;
 
     public RandomSoundPlayer startleSound, angrySound, attackSound;
 

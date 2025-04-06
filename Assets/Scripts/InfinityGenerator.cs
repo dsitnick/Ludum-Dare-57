@@ -6,11 +6,19 @@ public class InfinityGenerator : MonoBehaviour
 {
 
     public Transform root;
-    public Transform playerRoot;
     public GameObject prefab;
+    public GameObject enemyPrefab;
+    
+    public PlayerInfoScriptableObject playerInfo;
+    
+    public EnemySpawner enemySpawner;
+    
     public float scale;
     public int buildGridSize;
     public float clearDistance;
+
+    [Range(0, 1)]
+    public float enemySpawnProbability;
 
     private Dictionary<Vector3Int, GameObject> spawnedItems = new Dictionary<Vector3Int, GameObject>();
     private Queue<GameObject> inactiveItems = new Queue<GameObject>();
@@ -29,7 +37,7 @@ public class InfinityGenerator : MonoBehaviour
 
     void Refresh(bool force)
     {
-        Vector3Int coordinate = GetCoordinate(playerRoot.position);
+        Vector3Int coordinate = GetCoordinate(playerInfo.position);
         if (!force && coordinate == lastCoordinate) return;
 
         RefreshBuild();
@@ -41,7 +49,7 @@ public class InfinityGenerator : MonoBehaviour
     void RefreshBuild()
     {
 
-        Vector3Int coordinate = GetCoordinate(playerRoot.position);
+        Vector3Int coordinate = GetCoordinate(playerInfo.position);
         for (int x = -buildGridSize; x <= buildGridSize; x++)
         {
             for (int y = -buildGridSize; y <= buildGridSize; y++)
@@ -64,7 +72,7 @@ public class InfinityGenerator : MonoBehaviour
 
             float dist = clearDistance * scale;
 
-            if (Vector3.SqrMagnitude(position - playerRoot.position) >= dist * dist)
+            if (Vector3.SqrMagnitude(position - playerInfo.position) >= dist * dist)
             {
                 GameObject item = spawnedItems[coordinate];
                 inactiveItems.Enqueue(item);
@@ -110,6 +118,11 @@ public class InfinityGenerator : MonoBehaviour
 
         item.transform.localPosition = (Vector3)coordinate * scale;
         spawnedItems[coordinate] = item;
+
+        if (Random.value < enemySpawnProbability)
+        {
+            enemySpawner.SpawnEnemy(item.transform.localPosition);
+        }
     }
 
 

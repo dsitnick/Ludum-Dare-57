@@ -95,9 +95,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wandering: {fileID: 2371313635891258829}
   aggro: {fileID: 6353190152326354396}
+  playerInfo: {fileID: 11400000, guid: 44e2000cfeb1ec7419b73f32845fb075, type: 2}
+  startleSound: {fileID: 0}
+  angrySound: {fileID: 0}
+  attackSound: {fileID: 0}
+  animator: {fileID: 0}
   swimSpeed: 1
   velocityLerp: 8
   rotationLerp: 8
+  retreatDuration: 7
+  isAttacking: 0
+  isRetreating: 0
 --- !u!114 &2371313635891258829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,6 +135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeToAnger: 3
   timeToForget: 10
+  timeToCalm: 5
   animator: {fileID: 5933109521224791378}
 --- !u!95 &5933109521224791378
 Animator:

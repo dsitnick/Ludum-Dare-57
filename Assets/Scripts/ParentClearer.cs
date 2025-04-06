@@ -7,18 +7,18 @@ public class ParentClearer : MonoBehaviour
     
     public Transform[] targets;
     
-    private Transform root;
+    private GameObject root;
     
     void Awake()
     {
-        root = new GameObject(name + " Targets").transform;
+        root = new GameObject(name + " Targets");
         foreach (Transform target in targets){
-            target.parent = root;
+            target.parent = root.transform;
         }
     }
     
     void OnDestroy()
     {
-        if (root?.gameObject != null) Destroy(root.gameObject);
+        if (root != null) Destroy(root);
     }
 }
