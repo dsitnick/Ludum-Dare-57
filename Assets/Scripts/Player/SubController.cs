@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public class SubController : MonoBehaviour
 {
+    public bool skipIntro;
 
     public PlayerInfoScriptableObject playerInfo;
 
@@ -51,6 +52,14 @@ public class SubController : MonoBehaviour
     {
         SetActive(true);
         exitButton.SetActive(false);
+
+        if (skipIntro)
+        {
+            FinishDescent();
+            Vector3 v = transform.position;
+            v.y = targetDepth;
+            transform.position = v;
+        }
     }
 
     public void SetActive(bool isActive)
@@ -59,6 +68,13 @@ public class SubController : MonoBehaviour
         subCamera.enabled = subCamera.GetComponent<AudioListener>().enabled = isActive;
         exitButton.SetActive(isActive);
 
+    }
+
+    void FinishDescent()
+    {
+        onFinishDescent.Invoke();
+        hasStarted = true;
+        exitButton.SetActive(true);
     }
 
     void Update()
@@ -98,9 +114,7 @@ public class SubController : MonoBehaviour
             velocity = overrideVelocity;
             if (!hasStarted && transform.position.y <= targetDepth)
             {
-                onFinishDescent.Invoke();
-                hasStarted = true;
-                exitButton.SetActive(true);
+                FinishDescent();
             }
         }
         transform.position += velocity * Time.deltaTime;

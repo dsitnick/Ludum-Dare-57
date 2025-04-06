@@ -20,6 +20,8 @@ public class FishBehavior : MonoBehaviour
     
     public Transform attackRoot;
     
+    public LayerMask playerHitMask;
+    
     public UnityEvent onHit;
 
     private Vector3 targetPos;
@@ -37,6 +39,10 @@ public class FishBehavior : MonoBehaviour
         else if (!isAttacking)
         {
             targetPos = wandering.targetPos;
+        }
+        
+        if (isAttacking){
+            CheckPlayerHit();
         }
         
         if (isAttacking && Vector3.SqrMagnitude(targetPos - attackRoot.position) < DIST_THRESHOLD * DIST_THRESHOLD){
@@ -79,5 +85,18 @@ public class FishBehavior : MonoBehaviour
     public void PlayAngrySound() => angrySound.PlayRandomSound();
     public void PlayAttackSound() => attackSound.PlayRandomSound();
 
+    Collider[] HIT_BUFFER = new Collider[4];
+    void CheckPlayerHit(){
+        int count = Physics.OverlapSphereNonAlloc(attackRoot.position, ATTACK_RANGE, HIT_BUFFER, playerHitMask);
+        
+        for (int i = 0; i < count; i++){
+            CamController player = HIT_BUFFER[i].gameObject.GetComponentInParent<CamController>();
+            if (player != null){
+                player.Die();
+                Hit();
+                return;
+            }
+        }
+    }
 
 }

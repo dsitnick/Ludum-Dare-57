@@ -1259,7 +1259,7 @@ GameObject:
   m_Component:
   - component: {fileID: 533331821672431745}
   - component: {fileID: 5121396465308705706}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Collision Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1381,6 +1381,10 @@ PrefabInstance:
       propertyPath: startleSound
       value: 
       objectReference: {fileID: 3635279554414524203}
+    - target: {fileID: 5230332695313001548, guid: 8c775af3f0147af4fa25080a59b969fb, type: 3}
+      propertyPath: playerHitMask.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
     - target: {fileID: 5230332695313001548, guid: 8c775af3f0147af4fa25080a59b969fb, type: 3}
       propertyPath: onHit.m_PersistentCalls.m_Calls.Array.size
       value: 1
