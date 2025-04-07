@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class PingIndicator : MonoBehaviour
@@ -21,6 +22,8 @@ public class PingIndicator : MonoBehaviour
     public Graphic noSignalGraphic;
 
     public Graphic[] pingGraphics;
+    
+    public UnityEvent onPing;
 
     public Image pingBar;
     public Image heightIcon;
@@ -80,6 +83,8 @@ public class PingIndicator : MonoBehaviour
 
             currentPingDuration = Mathf.Lerp(closePingDelay, farPingDelay, proximity);
             pingTimer = currentPingDuration;
+            
+            onPing.Invoke();
         }
 
         pingTimer -= Time.deltaTime;

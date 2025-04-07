@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SubController : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class SubController : MonoBehaviour
     public float turnInertia = 30;
     public float swimIntertia = 30;
     public float boostScale = 3;
+    
+    public float boostDuration, boostRechargeDuration;
 
     public UnityEvent onCollide;
 
@@ -37,6 +40,9 @@ public class SubController : MonoBehaviour
     public AlarmSwitcher proximityAlarm;
     public CamController swimController;
     public HoldPressButton exitButton;
+    public Animator pingIndicatorAnimator;
+    
+    public Image boostIndicator;
 
     public UnityEvent onActivateCamera;
 
@@ -48,6 +54,8 @@ public class SubController : MonoBehaviour
     public Vector3 overrideVelocity;
 
     bool isBoosting;
+    
+    float boostRemaining;
 
     bool isActive;
     bool hasStarted = false;
@@ -57,6 +65,8 @@ public class SubController : MonoBehaviour
         playerInfo.isObjectiveComplete = false;
         SetActive(true);
         exitButton.SetActive(false);
+        
+        boostRemaining = 1;
 
         if (skipIntro)
         {
@@ -77,6 +87,7 @@ public class SubController : MonoBehaviour
 
         if (isActive && playerInfo.isObjectiveComplete)
         {
+            lights.SetLightActive(true);
             onVictory.Invoke();
         }
     }
@@ -86,8 +97,10 @@ public class SubController : MonoBehaviour
         onFinishDescent.Invoke();
         hasStarted = true;
         exitButton.SetActive(true);
+        pingIndicatorAnimator.SetBool("PingActive", false);
     }
 
+    bool wasBoosting;
     void Update()
     {
         if (controlsActive)
@@ -114,6 +127,20 @@ public class SubController : MonoBehaviour
                 transform.rotation = Quaternion.Euler(aim.y, aim.x, 0);
 
                 isBoosting = Input.GetKey(KeyCode.LeftShift);
+                
+                if (wasBoosting && isBoosting){
+                    isBoosting &= boostRemaining > 0;
+                }else if (!wasBoosting && isBoosting){
+                    isBoosting &= boostRemaining > 0.1f;
+                }
+                wasBoosting = isBoosting;
+                
+                if (isBoosting){
+                    boostRemaining -= Time.deltaTime / boostDuration;
+                }
+                boostRemaining = Mathf.Clamp01(boostRemaining);
+                
+                boostIndicator.fillAmount = boostRemaining;
 
                 targetVelocity = transform.forward * GetDriveSpeed() * speed;
             }

@@ -9,4 +9,8 @@ public class FullscreenToggle : MonoBehaviour
         Screen.fullScreen = !Screen.fullScreen;
     }
     
+    public void ExitGame(){
+        Application.Quit();
+    }
+    
 }

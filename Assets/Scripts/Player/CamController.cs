@@ -146,6 +146,7 @@ public class CamController : MonoBehaviour
     {
         if (isDead) return;
         isDead = true;
+        velocity = Vector3.zero;
         Debug.Log("Got eaten");
         onDie.Invoke();
     }

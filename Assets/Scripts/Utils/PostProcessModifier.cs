@@ -14,6 +14,8 @@ public class PostProcessModifier : MonoBehaviour
     
     public Oxygen oxygen;
     
+    public bool isFading;
+    
     private Vignette vignette;
     private ColorAdjustments colorAdjustments;
 
@@ -22,6 +24,10 @@ public class PostProcessModifier : MonoBehaviour
     
     [Range(0, 1)]
     public float oxygenSlider;
+    
+    
+    [Range(0, 1)]
+    public float fadeSlider;
 
     void Start()
     {
@@ -29,7 +35,7 @@ public class PostProcessModifier : MonoBehaviour
         volume.profile.TryGet(out colorAdjustments);
     }
 
-    float lastValue;
+    float lastValue, lastFade;
     void Update()
     {
         oxygenSlider = oxygen.remainingO2;
@@ -41,6 +47,8 @@ public class PostProcessModifier : MonoBehaviour
             colorAdjustments.colorFilter.value = Color.Lerp(minColorFilter, maxColorFilter, value);
             lastValue = value;
         }
+        
+        if (isFading) colorAdjustments.postExposure.value = Mathf.Lerp(0, -20, fadeSlider);
 
     }
 

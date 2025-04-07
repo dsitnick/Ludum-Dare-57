@@ -98,7 +98,7 @@ MonoBehaviour:
     m_Value: 0.3
   densityScale:
     m_OverrideState: 1
-    m_Value: 0.002
+    m_Value: 0.04
   maxDistance:
     m_OverrideState: 1
     m_Value: 600
